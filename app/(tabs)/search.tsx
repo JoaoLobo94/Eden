@@ -1,9 +1,12 @@
-import React from 'react'
-import { View } from 'react-native'
+import React from "react";
+import { View } from "react-native";
+import { Text } from "../../components/Themed";
 function Search() {
   return (
-    <View>Search</View>
-  )
+    <View>
+      <Text>Search</Text>
+    </View>
+  );
 }
 
-export default Search
+export default Search;
