@@ -1,12 +1,11 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "../../components/Themed";
-function Search() {
+import { View, Text } from "react-native";
+
+const Search: React.FC = () => {
   return (
     <View>
-      <Text>Search</Text>
+      <Text>My Component</Text>
     </View>
   );
-}
+};
 
 export default Search;
