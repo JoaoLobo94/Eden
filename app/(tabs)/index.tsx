@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Settings from "../../components/screens/settings";
-import Login from "../screens/login";
+import { View, Text } from "react-native";
 
-const HomeScreen = () => {
-  const [privateKeyExists, setPrivateKeyExists] = useState(false);
-
-  useEffect(() => {
-    async function checkPrivateKey() {
-      const privateKey = await AsyncStorage.getItem("privateKey");
-      setPrivateKeyExists(!!privateKey);
-    }
-
-    checkPrivateKey();
-  }, []);
-
-  return <>{privateKeyExists ? <Settings /> : <Login />}</>;
+const Search: React.FC = () => {
+  return (
+    <View>
+      <Text>My Component</Text>
+    </View>
+  );
 };
 
-export default HomeScreen;
-
+export default Search;

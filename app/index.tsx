@@ -11,8 +11,8 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { styles } from "../../components/styles";
-import SetupNostrDefaults from "../../services/setupNostrDefaults";
+import { styles } from "../components/styles";
+import SetupNostrDefaults from "../services/setupNostrDefaults";
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
@@ -103,7 +103,7 @@ const Login = () => {
           style={{
             transform: [{ scaleX: state.logo.x }, { scaleY: state.logo.y }],
           }}
-          source={require("../../assets/images/logo.png")}
+          source={require("../assets/images/logo.png")}
         />
       </View>
       <Animated.View

@@ -1,0 +1,4 @@
+login screen should be the main entry point on the app nothing else should happen until user is logged in
+
+after user is logged in should show bottom bar and everything start in search
+search should be the index function
