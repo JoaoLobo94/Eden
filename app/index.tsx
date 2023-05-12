@@ -13,9 +13,10 @@ import {
 } from "react-native";
 import { styles } from "../components/styles";
 import SetupNostrDefaults from "../services/setupNostrDefaults";
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from "expo-router";
 
 const Login = () => {
+  const router = useRouter();
   const initialState = {
     offset: new Animated.ValueXY({ x: 0, y: 95 }),
     opacity: new Animated.Value(0),
@@ -25,7 +26,6 @@ const Login = () => {
   const [state, setState] = useState(initialState);
   const [nsec, setNsec] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
 
   const keyboardDidShow = () => {
     Animated.parallel([
@@ -62,8 +62,7 @@ const Login = () => {
       setLoading(true);
       const connect = await SetupNostrDefaults(sk);
       if (connect) {
-        window.location.reload();
-        
+        router.push("home")
       }
     } catch (e) {
       alert("Error: " + e);
