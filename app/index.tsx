@@ -15,6 +15,7 @@ import { styles } from "../components/styles";
 import SetupNostrDefaults from "../services/setupNostrDefaults";
 import { useRouter } from "expo-router";
 import { Redirect } from 'expo-router';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
   const router = useRouter();
@@ -90,6 +91,12 @@ const Login = () => {
         useNativeDriver: true,
       }),
     ]).start();
+
+    AsyncStorage.getItem("privateKey").then((sk) => {
+      if (sk) {
+        setIsLoggedIn(true);
+      }
+    });
 
     return () => {
       Keyboard.removeListener("keyboardDidShow", keyboardDidShow);

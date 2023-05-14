@@ -31,17 +31,14 @@ const relayList = [
 ];
 
 async function generatePrivateKey(): Promise<string> {
-  const privateKeyBytes = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
+  const privateKeyBytes = Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
   return privateKeyBytes.substring(0, 64);
 }
 
-const SetupNostrDefaults = async (sk: string = '') => {
+const SetupNostrDefaults = async (sk?: string) => {
   new TextDecoder();
 
-  if (sk.length === 1){
-    sk = await generatePrivateKey();
-  }
-
+  sk = sk || await generatePrivateKey();
 
   const connections: Connect[] = [];
 
