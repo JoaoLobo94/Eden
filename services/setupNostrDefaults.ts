@@ -1,11 +1,10 @@
 import { TextDecoder } from "text-encoding";
-import { generatePrivateKey } from "nostr-tools";
 import { Connect } from "@nostr-connect/connect";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Crypto from 'expo-crypto';
 
 const relayList = [
   "wss://nostr.mom",
-  "wss://nostr.thomascdnns.com",
   "wss://ithurtswhenip.ee",
   "wss://nostr.lu.ke",
   "wss://relay.austrich.net",
@@ -31,9 +30,18 @@ const relayList = [
   "wss://nostr.coollamer.com",
 ];
 
-const SetupNostrDefaults = async (sk: string = generatePrivateKey()) => {
-  console.log(123)
+async function generatePrivateKey(): Promise<string> {
+  const privateKeyBytes = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
+  return privateKeyBytes.substring(0, 64);
+}
+
+const SetupNostrDefaults = async (sk: string = '') => {
   new TextDecoder();
+
+  if (sk.length === 1){
+    sk = await generatePrivateKey();
+  }
+
 
   const connections: Connect[] = [];
 

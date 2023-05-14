@@ -14,6 +14,7 @@ import {
 import { styles } from "../components/styles";
 import SetupNostrDefaults from "../services/setupNostrDefaults";
 import { useRouter } from "expo-router";
+import { Redirect } from 'expo-router';
 
 const Login = () => {
   const router = useRouter();
@@ -23,9 +24,10 @@ const Login = () => {
     logo: new Animated.ValueXY({ x: 1, y: 1 }),
   };
 
-  const [state, setState] = useState(initialState);
+  const [state] = useState(initialState);
   const [nsec, setNsec] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const keyboardDidShow = () => {
     Animated.parallel([
@@ -62,7 +64,7 @@ const Login = () => {
       setLoading(true);
       const connect = await SetupNostrDefaults(sk);
       if (connect) {
-        router.push("home")
+        router.push("home");
       }
     } catch (e) {
       alert("Error: " + e);
@@ -95,54 +97,58 @@ const Login = () => {
     };
   }, [state]);
 
-  return (
-    <KeyboardAvoidingView style={styles.background} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-      <View style={styles.logocontainer}>
-        <Animated.Image
-          style={{
-            transform: [{ scaleX: state.logo.x }, { scaleY: state.logo.y }],
-          }}
-          source={require("../assets/images/logo.png")}
-        />
-      </View>
-      <Animated.View
-        style={[
-          styles.container,
-          {
-            opacity: state.opacity,
-            transform: [
-              {
-                translateY: state.offset.y,
-              },
-            ],
-          },
-        ]}
-      >
-        <Text style={styles.title}>AirNBits</Text>
-        <TextInput
-          placeholderTextColor="#3337"
-          style={styles.input}
-          placeholder="Paste your nsec to login"
-          autoCorrect={false}
-          value={nsec}
-          onChangeText={(text) => setNsec(text)}
-        />
+  if (isLoggedIn === true) {
+    return (<Redirect href="/home" />);
+  } else {
+    return (
+      <KeyboardAvoidingView style={styles.background} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <View style={styles.logocontainer}>
+          <Animated.Image
+            style={{
+              transform: [{ scaleX: state.logo.x }, { scaleY: state.logo.y }],
+            }}
+            source={require("../assets/images/logo.png")}
+          />
+        </View>
+        <Animated.View
+          style={[
+            styles.container,
+            {
+              opacity: state.opacity,
+              transform: [
+                {
+                  translateY: state.offset.y,
+                },
+              ],
+            },
+          ]}
+        >
+          <Text style={styles.title}>AirNBits</Text>
+          <TextInput
+            placeholderTextColor="#3337"
+            style={styles.input}
+            placeholder="Paste your nsec to login"
+            autoCorrect={false}
+            value={nsec}
+            onChangeText={(text) => setNsec(text)}
+          />
 
-        <TouchableOpacity style={styles.submitbutton} onPress={() => login(nsec)}>
-          <Text style={styles.submittext}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Button title="Generate New account" onPress={() => login()} />
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.submitbutton} onPress={() => login(nsec)}>
+            <Text style={styles.submittext}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Button title="Generate New account" onPress={() => login()} />
+          </TouchableOpacity>
 
-        {loading && (
-          <View>
-            <ActivityIndicator size="large" color="#35AAFF" />
-          </View>
-        )}
-      </Animated.View>
-    </KeyboardAvoidingView>
-  );
+          {loading && (
+            <View>
+              <ActivityIndicator size="large" color="#35AAFF" />
+            </View>
+          )}
+        </Animated.View>
+      </KeyboardAvoidingView>
+    );
+  }
 };
 
 export default Login;

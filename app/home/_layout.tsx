@@ -32,9 +32,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="search"
+        name="chat"
         options={{
-          title: 'Search',
+          title: 'chat',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
