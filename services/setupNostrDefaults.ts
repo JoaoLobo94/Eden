@@ -31,7 +31,7 @@ const relayList = [
 ];
 
 async function generatePrivateKey(): Promise<string> {
-  const privateKeyBytes = Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
+  const privateKeyBytes = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
   return privateKeyBytes.substring(0, 64);
 }
 
