@@ -14,7 +14,7 @@ import {
 import { styles } from "../components/styles";
 import SetupNostrDefaults from "../services/setupNostrDefaults";
 import { useRouter } from "expo-router";
-import { Redirect } from 'expo-router';
+import { Redirect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
@@ -105,7 +105,7 @@ const Login = () => {
   }, [state]);
 
   if (isLoggedIn === true) {
-    return (<Redirect href="/home" />);
+    return <Redirect href="/home" />;
   } else {
     return (
       <KeyboardAvoidingView style={styles.background} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -140,9 +140,14 @@ const Login = () => {
             onChangeText={(text) => setNsec(text)}
           />
 
-          <TouchableOpacity style={styles.submitbutton} onPress={() => login(nsec)}>
+          <TouchableOpacity
+            style={[styles.submitbutton, nsec === "" && styles.disabledSubmitButton]}
+            onPress={() => login(nsec)}
+            disabled={nsec === ""}
+          >
             <Text style={styles.submittext}>Login</Text>
           </TouchableOpacity>
+
           <TouchableOpacity>
             <Button title="Generate New account" onPress={() => login()} />
           </TouchableOpacity>

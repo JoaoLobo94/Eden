@@ -49,4 +49,14 @@ export const styles = StyleSheet.create({
     color: "#6e5494",
     marginBottom: 30,
   },
+  disabledSubmitButton: {
+    backgroundColor: "#35AAFF",
+    width: "90%",
+    height: 45,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+    borderRadius: 7,
+    opacity: 0.5,
+  },
 });

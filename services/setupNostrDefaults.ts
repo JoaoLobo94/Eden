@@ -2,6 +2,7 @@ import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { relayInit } from "nostr-tools";
 
+
 const relayList = [
   "wss://nostr.mom",
   "wss://ithurtswhenip.ee",
@@ -27,6 +28,7 @@ const relayList = [
   "wss://nostramsterdam.vpx.moe",
   "wss://nostr.xmr.rocks",
   "wss://nostr.coollamer.com",
+  "ws://127.0.0.1:6969"
 ];
 
 async function generatePrivateKey(): Promise<string> {
@@ -35,25 +37,16 @@ async function generatePrivateKey(): Promise<string> {
 }
 
 const SetupNostrDefaults = async (sk?: string) => {
-  sk = sk || await generatePrivateKey();
+
+  sk = sk || (await generatePrivateKey());
+
+  if (sk.length !== 64) {
+    throw new Error("Invalid private key");
+  }
   await AsyncStorage.setItem("privateKey", sk);
 
-  // const connections: Connect[] = [];
-
-  // if (true) {
-  //   const connect = new Connect({ secretKey: sk, relay: 'ws://127.0.0.1:6969' });
-  //   await connect.init();
-  //   connections.push(connect);
-  // } else {
-  //   for (const r of relayList) {
-  //     const connect = new Connect({ secretKey: sk, relay: r });
-  //     await connect.init();
-  //     connections.push(connect);
-  //   }
-  // }
-
-  // return connections;
-    const relay = relayInit("ws://127.0.0.1:6969");
+  relayList.forEach(async (endpoint) => {
+    const relay = relayInit(endpoint);
     console.log(relay);
     relay.on("connect", () => {
       console.log(`connected to ${relay.url}`);
@@ -62,7 +55,9 @@ const SetupNostrDefaults = async (sk?: string) => {
       console.log(`failed to connect to ${relay.url}`);
     });
     await relay.connect();
+  });
+  return true
+}
 
-};
 
 export default SetupNostrDefaults;
