@@ -1,7 +1,6 @@
-import { TextDecoder } from "text-encoding";
-import { Connect } from "@nostr-connect/connect";
+import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Crypto from 'expo-crypto';
+import { relayInit } from "nostr-tools";
 
 const relayList = [
   "wss://nostr.mom",
@@ -36,22 +35,34 @@ async function generatePrivateKey(): Promise<string> {
 }
 
 const SetupNostrDefaults = async (sk?: string) => {
-  new TextDecoder();
-
   sk = sk || await generatePrivateKey();
-
-  const connections: Connect[] = [];
-
-  for (const r of relayList) {
-    const connect = new Connect({ secretKey: sk, relay: r });
-
-    await connect.init();
-    connections.push(connect);
-  }
-
   await AsyncStorage.setItem("privateKey", sk);
 
-  return connections;
+  // const connections: Connect[] = [];
+
+  // if (true) {
+  //   const connect = new Connect({ secretKey: sk, relay: 'ws://127.0.0.1:6969' });
+  //   await connect.init();
+  //   connections.push(connect);
+  // } else {
+  //   for (const r of relayList) {
+  //     const connect = new Connect({ secretKey: sk, relay: r });
+  //     await connect.init();
+  //     connections.push(connect);
+  //   }
+  // }
+
+  // return connections;
+    const relay = relayInit("ws://127.0.0.1:6969");
+    console.log(relay);
+    relay.on("connect", () => {
+      console.log(`connected to ${relay.url}`);
+    });
+    relay.on("error", () => {
+      console.log(`failed to connect to ${relay.url}`);
+    });
+    await relay.connect();
+
 };
 
 export default SetupNostrDefaults;
