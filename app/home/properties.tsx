@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Button } from 'react-native';
 import { styles } from "../../components/styles";
-import PostToRelay from "../../services/relayPost";
 
 function Properties() {
   

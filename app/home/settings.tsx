@@ -4,7 +4,6 @@ import { styles } from "../../components/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPublicKey } from "nostr-tools";
 import { useState, useEffect } from "react";
-import AddRelayToNostr from '../../services/initRelay';
 
 
 const Settings = () => {
@@ -94,9 +93,6 @@ const Settings = () => {
         value={relay}
         onChangeText={(text) => setRelay(text)}
       />
-      <TouchableOpacity style={styles.submitbutton} onPress={() => AddRelayToNostr(relay)}>
-        <Text style={styles.submittext}>Connect to Relay</Text>
-      </TouchableOpacity>
       <Button
         title="Logout"
         onPress={() => {
