@@ -4,7 +4,7 @@ import { styles } from "../../components/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPublicKey } from "nostr-tools";
 import { useState, useEffect } from "react";
-import AddRelayToNostr from '../../services/addRelayToNostr';
+import AddRelayToNostr from '../../services/initRelay';
 
 
 const Settings = () => {
