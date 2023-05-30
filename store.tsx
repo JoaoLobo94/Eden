@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import navReducer from "./slices/navSlice";
+import connectReducer from "./slices/connectSlice";
 
 export const store = configureStore({
   reducer: {
-	nav: navReducer
+    connect: connectReducer
   },
 });
 

@@ -19,6 +19,7 @@ const SetupNostrDefaults = async (sk?: string) => {
 
 
   return true
+  // init relays from from connect slice and dispatch them to rediz
 }
 
 
