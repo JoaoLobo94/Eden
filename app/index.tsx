@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import { styles } from "../components/styles";
 import SetupNostrDefaults from "../core/setupNostrDefaults";
-import { useRouter } from "expo-router";
-import { Redirect } from "expo-router";
+import { useRouter, Redirect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {

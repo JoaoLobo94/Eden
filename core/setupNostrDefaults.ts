@@ -1,5 +1,6 @@
 import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { connectToRelay, defaultRelays  } from "./nostr";
 
 
 
@@ -17,9 +18,7 @@ const SetupNostrDefaults = async (sk?: string) => {
   }
   await AsyncStorage.setItem("privateKey", sk);
 
-
   return true
-  // init relays from from connect slice and dispatch them to rediz
 }
 
 

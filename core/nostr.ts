@@ -2,7 +2,6 @@ import {
   relayInit,
   getEventHash,
   getSignature,
-  generatePrivateKey,
   getPublicKey,
   validateEvent,
   verifySignature,
@@ -23,6 +22,7 @@ export const defaultRelays = [
   "wss://nostr-pub.wellorder.net",
   "wss://nostr.oxtr.dev",
   "wss://nostr-pub.semisol.dev",
+  "ws://127.0.0.1:6969",
 ]
 
 const GET_EVENTS_LIMIT = 50
@@ -188,13 +188,6 @@ export const publishNote = async (
   event.id = getEventHash(event)
   // @ts-expect-error
   event.sig = getSignature(event, user.privateKey)
-
-  // console.log("event", event)
-  // let ok = validateEvent(event)
-  // let veryOk = verifySignature(event)
-  // console.log("ok?", ok)
-  // console.log("veryOk?", veryOk)
-  // return
 
   let returned = false
   return new Promise((resolve) => {
