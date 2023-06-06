@@ -1,18 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Button } from 'react-native';
-import { styles } from "../../components/styles";
-import { connectToRelay } from '../../core/nostr';
+import { View, Text, Button } from 'react-native';
+import { useRouter } from "expo-router";
 
 
 function Properties() {
+  const router = useRouter();
 
   return (
     <View>
-      <Text>Properties</Text>
-      <Button title="Add new property" />
-      <TouchableOpacity>
-            <Button title="Post property" onPress={() => connectToRelay('ws://127.0.0.1:6969')} />
-          </TouchableOpacity>
+      <Text>Properties list</Text>
+      <Button title="Add new property" onPress={() => router.push("/locations/create")} />
     </View>
   );
 }

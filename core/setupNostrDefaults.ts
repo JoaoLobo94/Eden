@@ -1,6 +1,5 @@
 import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { connectToRelay, defaultRelays  } from "./nostr";
 
 
 

@@ -4,11 +4,9 @@ import { styles } from "../../components/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPublicKey } from "nostr-tools";
 import { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
 import { connectToRelay, defaultRelays  } from "../../core/nostr";
 
 const Settings = () => {
-  const router = useRouter();
 
   async function deletePk() {
     await AsyncStorage.removeItem("privateKey");
