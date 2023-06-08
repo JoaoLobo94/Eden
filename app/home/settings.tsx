@@ -4,28 +4,43 @@ import { styles } from "../../components/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getPublicKey } from "nostr-tools";
 import { useState, useEffect } from "react";
-import { connectToRelay, defaultRelays  } from "../../core/nostr";
+import { connectToRelay, defaultRelays } from "../../core/nostr";
+import { useSelector, useDispatch } from "react-redux";
+import { addRelay } from "../../slices/connectSlice";
 
 const Settings = () => {
+  const dispatch = useDispatch();
 
   async function deletePk() {
     await AsyncStorage.removeItem("privateKey");
     window.location.reload();
   }
 
-  function connectRelay(relay) {
-    connectToRelay(relay, (data) => {});
-  }
+  const handleConnectRelay = async (relay: string) => {
+    try {
+      const relayConnection = await connectToRelay(relay, (result) => {
+        const newRelayEntry = {
+          url: result.relay.url,
+          status: result.relay.status,
+          success: result.success,
+        };
+
+        dispatch(addRelay(newRelayEntry));
+      });
+    } catch (error) {
+      console.log("Error connecting to relay:", error);
+    }
+  };
 
   const [nsec, setNsec] = useState(null);
   const [npub, setNpub] = useState("");
   const [lnUrl, setLnUrl] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [btcAddress, setBtcAddress] = useState("");
-  const [relay, setRelay] = useState("");
+  const [selectedRelay, setSelectedRelay] = useState("");
 
   useEffect(() => {
-    async function getkeys() {
+    async function getKeys() {
       const nsec = await AsyncStorage.getItem("privateKey");
       const lnUrl = await AsyncStorage.getItem("lnUrl");
       const whatsapp = await AsyncStorage.getItem("whatsapp");
@@ -39,7 +54,7 @@ const Settings = () => {
         setNpub(npub);
       }
     }
-    getkeys();
+    getKeys();
   }, []);
 
   const saveLnUrl = async () => {
@@ -53,6 +68,7 @@ const Settings = () => {
   const saveBtcAddress = async () => {
     await AsyncStorage.setItem("btcAddress", btcAddress);
   };
+
   return (
     <View>
       <Text>your nsec</Text>
@@ -97,23 +113,14 @@ const Settings = () => {
         style={styles.input}
         placeholder="Connect to a new relay"
         autoCorrect={false}
-        value={relay}
-        onChangeText={(text) => setRelay(text)}
+        value={selectedRelay}
+        onChangeText={(text) => setSelectedRelay(text)}
       />
-      <Button
-        title="Logout"
-        onPress={() => {
-          deletePk();
-        }}
-      />
+      <Button title="Logout" onPress={deletePk} />
       <Text>All this data is locally stored, if you log out you will have to enter it again</Text>
       {defaultRelays.map((relay) => {
         return (
-          <TouchableOpacity
-            key={relay}
-            style={styles.submitbutton}
-            onPress={() => connectRelay(relay)}
-          >
+          <TouchableOpacity key={relay} style={styles.submitbutton} onPress={() => handleConnectRelay(relay)}>
             <Text style={styles.submittext}>connect to {relay}</Text>
           </TouchableOpacity>
         );
