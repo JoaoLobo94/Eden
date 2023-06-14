@@ -8,8 +8,8 @@ interface RelayEntry {
 }
 
 interface ConnectState {
-  relays: Record<number, RelayEntry>; // An object to hold relay entries with auto-incremented IDs
-  idCounter: number; // Counter for generating unique IDs
+  relays: [];
+  idCounter: number;
 }
 
 const initialState: ConnectState = {

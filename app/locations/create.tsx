@@ -1,38 +1,57 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Button, TextInput } from "react-native";
+import { View, TouchableOpacity, Button, TextInput } from "react-native";
 import { useState, useEffect } from "react";
+import { defaultRelays } from "../../core/nostr";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getPublicKey, SimplePool, getEventHash, getSignature, EventTemplate } from "nostr-tools";
 
 const create = () => {
+  const [nsec, setNsec] = useState("");
+  const [npub, setNpub] = useState("");
+  const pool = new SimplePool();
+  
+  useEffect(() => {
+    async function getInfo() {
+      const nsec = await AsyncStorage.getItem("privateKey");
+      if (nsec !== null) {
+        const npub = getPublicKey(nsec);
+        setNsec(nsec);
+        setNpub(npub);
+      }
+    }
+    getInfo();
+  }, []);
+
   const initialFormData = {
-    id: '',
-    name: '',
+    id: "",
+    name: "",
     isSuperhost: false,
-    pictureUrl: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
+    pictureUrl: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
     latitude: 0,
     longitude: 0,
-    title: '',
-    description: '',
-    type: '',
+    title: "",
+    description: "",
+    type: "",
     maxGuests: 0,
     bedrooms: 0,
     beds: 0,
     bathrooms: 0,
     amenities: [],
     pricePerNight: 0,
-    currency: '',
+    currency: "",
     rating: 0,
     reviewsCount: 0,
     images: [],
-    startDateAvailable: '',
-    endDateAvailable: '',
+    startDateAvailable: "",
+    endDateAvailable: "",
     occupancyPeriods: {
-      npub: '',
-      startDate: '',
-      endDate: '',
+      npub: "",
+      startDate: "",
+      endDate: "",
       // make it repeatable somehow?
     },
   };
@@ -46,9 +65,28 @@ const create = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    // Handle form submission with the data in formData
-    console.log(formData);
+  let event = {
+    id: "",
+    sig: "",
+    kind: 1,
+    pubkey: npub,
+    created_at: Math.floor(Date.now() / 1000),
+    tags: [['property']],
+    content: 'hello world'
+  };
+  
+  
+  
+  const handleSubmit = async () => {
+    event.id = getEventHash(event);
+    event.sig = getSignature(event, nsec);
+    defaultRelays
+    event
+    npub
+    let pubs = pool.publish(defaultRelays, event);
+    pubs.on("ok", () => {
+     console.log("ok");
+    });
   };
 
   return (
@@ -67,8 +105,5 @@ const create = () => {
     </View>
   );
 };
-// <View>
-
-// </View>
 
 export default create;
