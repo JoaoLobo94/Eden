@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import connectReducer from "./slices/connectSlice";
+import postSlice from "./slices/postSlice";
 
 export const store = configureStore({
   reducer: {
-    connect: connectReducer,
+    connect: postSlice,
   },
   devTools: true,
 });

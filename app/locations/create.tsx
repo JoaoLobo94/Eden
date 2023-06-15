@@ -1,26 +1,9 @@
 import React from "react";
 import { View, TouchableOpacity, Button, TextInput } from "react-native";
 import { useState, useEffect } from "react";
-import { defaultRelays } from "../../core/nostr";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getPublicKey, SimplePool, getEventHash, getSignature, EventTemplate } from "nostr-tools";
 
 const create = () => {
-  const [nsec, setNsec] = useState("");
-  const [npub, setNpub] = useState("");
-  const pool = new SimplePool();
-  
-  useEffect(() => {
-    async function getInfo() {
-      const nsec = await AsyncStorage.getItem("privateKey");
-      if (nsec !== null) {
-        const npub = getPublicKey(nsec);
-        setNsec(nsec);
-        setNpub(npub);
-      }
-    }
-    getInfo();
-  }, []);
+
 
   const initialFormData = {
     id: "",
@@ -65,30 +48,6 @@ const create = () => {
     }));
   };
 
-  let event = {
-    id: "",
-    sig: "",
-    kind: 1,
-    pubkey: npub,
-    created_at: Math.floor(Date.now() / 1000),
-    tags: [['property']],
-    content: 'hello world'
-  };
-  
-  
-  
-  const handleSubmit = async () => {
-    event.id = getEventHash(event);
-    event.sig = getSignature(event, nsec);
-    defaultRelays
-    event
-    npub
-    let pubs = pool.publish(defaultRelays, event);
-    pubs.on("ok", () => {
-     console.log("ok");
-    });
-  };
-
   return (
     <View>
       {Object.keys(initialFormData).map((key) => (
@@ -100,7 +59,7 @@ const create = () => {
         />
       ))}
       <TouchableOpacity>
-        <Button title="Post property" onPress={handleSubmit} />
+        {/* <Button title="Post property" onPress={handleSubmit} /> */}
       </TouchableOpacity>
     </View>
   );
