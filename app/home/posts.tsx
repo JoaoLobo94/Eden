@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { useRouter } from "expo-router";
 
 
-function Properties() {
+function Posts() {
   const router = useRouter();
 
   return (
@@ -14,4 +14,4 @@ function Properties() {
   );
 }
 
-export default Properties;
+export default Posts;

@@ -1,8 +1,11 @@
 import React from "react";
 import { View, TouchableOpacity, Button, TextInput } from "react-native";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { postNote } from "../../core/core";
 
 const create = () => {
+  const dispatch = useDispatch<any>();
 
 
   const initialFormData = {
@@ -48,6 +51,10 @@ const create = () => {
     }));
   };
 
+  const handleSubmit = () => {
+    dispatch(postNote(formData));
+  };
+
   return (
     <View>
       {Object.keys(initialFormData).map((key) => (
@@ -59,7 +66,7 @@ const create = () => {
         />
       ))}
       <TouchableOpacity>
-        {/* <Button title="Post property" onPress={handleSubmit} /> */}
+        <Button title="Post property" onPress={handleSubmit} />
       </TouchableOpacity>
     </View>
   );

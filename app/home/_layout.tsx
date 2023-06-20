@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Tabs } from "expo-router";
+import { useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
 
@@ -30,47 +30,26 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="chat"
-        options={{
-          title: "chat",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="trips"
         options={{
-          title: "trips",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "My Trips",
+          tabBarIcon: ({ color }) => <TabBarIcon name="map-pin" color={color} />,
 
           header: () => null,
         }}
       />
       <Tabs.Screen
-        name="properties"
+        name="posts"
         options={{
-          title: "Your Properties",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          title: "Share Something",
+          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
           headerTitleAlign: "center", // Center header title
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: "settings",
+          title: "Settings",
           tabBarIcon: ({ color }) => <TabBarIcon name="gear" color={color} />,
 
           header: () => null,

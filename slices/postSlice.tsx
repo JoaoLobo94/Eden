@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { postNote } from '../core/nostr/core';
+import { postNote } from '../core/core';
 
 const postSlice = createSlice({
   name: 'events',
