@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
+import { View, Text, FlatList} from "react-native";
 
 const Search: React.FC = () => {
+// will render compoenent based on radio button selection (Airbnb or uber for now)
   return (
-    <View>
-      <Text>My Component</Text>
-    </View>
+  <View>
+  </View>
   );
 };
 

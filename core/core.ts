@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getEventHash, getSignature,  SimplePool, getPublicKey, Event } from 'nostr-tools';
+import { getEventHash, getSignature,  SimplePool, getPublicKey } from 'nostr-tools';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {DEFAULT_RELAYS, DEV_RELAYS} from '../constants/relays';
 

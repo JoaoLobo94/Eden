@@ -2,7 +2,6 @@ import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
 async function generatePrivateKey(): Promise<string> {
   const privateKeyBytes = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, Math.random().toString());
   return privateKeyBytes.substring(0, 64);
