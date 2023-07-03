@@ -1,5 +1,7 @@
 import * as Crypto from "expo-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+  // when nostr tools update is done
+// import { generatePrivateKey } from "nostr-tools";
 
 
 async function generatePrivateKey(): Promise<string> {
@@ -8,7 +10,6 @@ async function generatePrivateKey(): Promise<string> {
 }
 
 const SetupNostrDefaults = async (sk?: string) => {
-
   sk = sk || (await generatePrivateKey());
 
   if (sk.length !== 64) {

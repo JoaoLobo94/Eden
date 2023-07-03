@@ -3,46 +3,32 @@ import { View, TouchableOpacity, Button, TextInput } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postNote } from "../../core/core";
+import { HouseShare } from "../../types/nostrNip";
 
 const create = () => {
   const dispatch = useDispatch<any>();
 
-
-  const initialFormData = {
-    id: "",
-    name: "",
+  const houseShareExample: HouseShare = {
+    id: "abc123",
+    name: "Cozy House Share",
     isSuperhost: false,
-    pictureUrl: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    latitude: 0,
-    longitude: 0,
-    title: "",
-    description: "",
-    type: "",
-    maxGuests: 0,
-    bedrooms: 0,
-    beds: 0,
-    bathrooms: 0,
-    amenities: [],
-    pricePerNight: 0,
-    currency: "",
-    rating: 0,
-    reviewsCount: 0,
-    images: [],
-    startDateAvailable: "",
-    endDateAvailable: "",
-    occupancyPeriods: {
-      npub: "",
-      startDate: "",
-      endDate: "",
-      // make it repeatable somehow?
-    },
+    pictureUrl: "https://example.com/image.jpg",
+    title: "Cozy House Share with Garden",
+    description: "A comfortable house share with a beautiful garden.",
+    type: "Shared House",
+    maxGuests: 4,
+    bedrooms: 3,
+    beds: 4,
+    bathrooms: 2,
+    amenities: ["Wi-Fi", "Kitchen", "Laundry"],
+    pricePerNight: 50,
+    currency: "USD",
+    rating: 4.5,
+    reviewsCount: 10,
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+
+  const [formData, setFormData] = useState(houseShareExample);
 
   const handleChange = (key, value) => {
     setFormData((prevFormData) => ({
@@ -57,7 +43,7 @@ const create = () => {
 
   return (
     <View>
-      {Object.keys(initialFormData).map((key) => (
+      {Object.keys(houseShareExample).map((key) => (
         <TextInput
           key={key}
           value={formData[key]}
