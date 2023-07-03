@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, Button, TextInput } from "react-native";
-import { useState, useEffect } from "react";
+import { useState  } from "react";
 import { useDispatch } from "react-redux";
 import { postNote } from "../../core/core";
 import { HouseShare } from "../../types/nostrNip";
@@ -38,7 +38,8 @@ const create = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(postNote(formData));
+    // dispatch(postNote(formData));
+    // dispatch(getNote());
   };
 
   return (

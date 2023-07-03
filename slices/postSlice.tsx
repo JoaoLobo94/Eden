@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { postNote } from '../core/core';
 
 const postSlice = createSlice({
-  name: 'events',
+  name: 'post event',
   initialState: {
     loading: false,
     error: null,
