@@ -5,6 +5,8 @@ import { useRouter } from "expo-router";
 
 function Posts() {
   const router = useRouter();
+  // button o add a uber aswell
+  // just in cards what i currently own
 
   return (
     <View>

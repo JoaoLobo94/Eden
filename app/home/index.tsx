@@ -1,11 +1,12 @@
-import { View, Text, FlatList} from "react-native";
+import { Input} from "native-base";
 
-const Search: React.FC = () => {
-// will render compoenent based on radio button selection (Airbnb or uber for now)
-  return (
-  <View>
-  </View>
-  );
-};
+// select 2 button aitbnb or uber
+// if airbnb select location (search by street)
+// if uber search for current location
 
+
+const Search = () => {
+  return <Input shadow={2}
+  placeholder="Enter your name" />;
+}
 export default Search;

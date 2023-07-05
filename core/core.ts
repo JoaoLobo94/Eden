@@ -7,7 +7,7 @@ import { type Filter } from "nostr-tools/lib/filter";
 
 export const postNote = createAsyncThunk(
   "events/submitEvent",
-  async (data: NipData, tags: string[][], kind: number) => {
+  async (payload: { data: NipData, tags: string[][], kind: number }) => {
     const pool = new SimplePool();
     const nsec = await AsyncStorage.getItem("privateKey");
     const npub = getPublicKey(nsec);
@@ -15,11 +15,11 @@ export const postNote = createAsyncThunk(
     let event = {
       id: "",
       sig: "",
-      kind: kind,
+      kind: payload.kind,
       pubkey: npub,
       created_at: Math.floor(Date.now() / 1000),
-      tags: tags,
-      content: JSON.stringify(data),
+      tags: payload.tags,
+      content: JSON.stringify(payload.data),
     };
 
     event.id = getEventHash(event);
@@ -48,6 +48,17 @@ export const getNote = createAsyncThunk("events/getEvent", async (authors: strin
     throw new Error("Failed to get event");
   }
 });
+
+// type Filter = {
+//   ids?: string[];
+//   kinds?: K[];
+//   authors?: string[];
+//   since?: number;
+//   until?: number;
+//   limit?: number;
+//   search?: string;
+//   [key: `#${string}`]: string[];
+// };
 
 export const getFilteredNotes = createAsyncThunk("events/getEvent", async (filter: Filter<any> = {}) => {
   const pool = new SimplePool();

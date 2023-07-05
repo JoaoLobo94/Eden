@@ -6,6 +6,7 @@ import { getPublicKey } from "nostr-tools";
 import { useState, useEffect } from "react";
 
 const Settings = () => {
+// add option to be online when app is open always
 
   async function deletePk() {
     await AsyncStorage.removeItem("privateKey");

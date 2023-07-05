@@ -2,33 +2,30 @@ import React from "react";
 import { View, TouchableOpacity, Button, TextInput } from "react-native";
 import { useState  } from "react";
 import { useDispatch } from "react-redux";
-import { postNote } from "../../core/core";
-import { HouseShare } from "../../types/nostrNip";
+import { postNote, getFilteredNotes } from "../../core/core";
+import { NipData } from "../../types/nostrNip";
 
 const create = () => {
   const dispatch = useDispatch<any>();
 
-  const houseShareExample: HouseShare = {
-    id: "abc123",
-    name: "Cozy House Share",
-    isSuperhost: false,
-    pictureUrl: "https://example.com/image.jpg",
-    title: "Cozy House Share with Garden",
-    description: "A comfortable house share with a beautiful garden.",
-    type: "Shared House",
-    maxGuests: 4,
-    bedrooms: 3,
-    beds: 4,
-    bathrooms: 2,
-    amenities: ["Wi-Fi", "Kitchen", "Laundry"],
-    pricePerNight: 50,
-    currency: "USD",
-    rating: 4.5,
-    reviewsCount: 10,
+  const product: NipData = {
+    uuid: "123456",
+    name: "Example Product",
+    price: 9.99,
+    needsMap: true,
+    needsAutoFind: false,
+    online: true,
+    specifics: {
+      attributes: {
+        color: "red",
+        size: "medium",
+        weight: 0.5
+      }
+    }
   };
 
 
-  const [formData, setFormData] = useState(houseShareExample);
+  const [formData, setFormData] = useState(product);
 
   const handleChange = (key, value) => {
     setFormData((prevFormData) => ({
@@ -38,13 +35,19 @@ const create = () => {
   };
 
   const handleSubmit = () => {
-    // dispatch(postNote(formData));
-    // dispatch(getNote());
+    const tags = [["t", "airbnb"], ["d", formData.uuid]];
+    const kind = 30017;
+    // const filter = {
+    //   "#t": ["airbnb"],
+    // };
+
+    dispatch(postNote({ data: formData, tags: tags, kind: kind }));
+    // dispatch(getFilteredNotes(filter));
   };
 
   return (
     <View>
-      {Object.keys(houseShareExample).map((key) => (
+      {Object.keys(product).map((key) => (
         <TextInput
           key={key}
           value={formData[key]}
