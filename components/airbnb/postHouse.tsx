@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { postNote, getFilteredNotes } from "../../core/core";
 import { NipData } from "../../types/nostrNip";
 
-const create = () => {
+const PostHouse = () => {
   const dispatch = useDispatch<any>();
 
   const product: NipData = {
@@ -62,4 +62,4 @@ const create = () => {
   );
 };
 
-export default create;
+export default PostHouse;

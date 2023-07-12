@@ -11,7 +11,7 @@ function Posts() {
   return (
     <View>
       <Text>Properties list</Text>
-      <Button title="Add new property" onPress={() => router.push("/locations/create")} />
+      <Button title="Add new property" onPress={() => router.push("create")} />
     </View>
   );
 }
